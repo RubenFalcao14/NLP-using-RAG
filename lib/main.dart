@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:nlp/screens/home_screen.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class MyApp extends StatefulWidget {
+  const MyApp({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<MyApp> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
