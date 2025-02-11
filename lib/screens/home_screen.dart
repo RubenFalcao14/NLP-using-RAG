@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nlp/services/file_service.dart';
 import 'package:nlp/utils/app_styles.dart';
 import 'package:nlp/widgets/custom_textfield.dart';
 
@@ -11,7 +12,44 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
 
-  final TextEditingController titleController = TextEditingController();
+  FileService fileService = FileService();
+
+  @override
+  void initState(){
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    removeListeners();
+    super.dispose();
+  }
+
+  void addListeners(){
+    List<TextEditingController> controllers = [
+      fileService.titleController
+    ];
+
+    for(TextEditingController controller in controllers){
+      controller.addListener(_onFieldChanged);
+    }
+  }
+
+  void removeListeners(){
+    List<TextEditingController> controllers = [
+      fileService.titleController
+    ];
+
+    for(TextEditingController controller in controllers){
+      controller.removeListener(_onFieldChanged);
+    }
+  }
+
+  void _onFieldChanged(){
+    setState(() {
+      fileService.fieldsNotEmpty = fileService.titleController.text.isNotEmpty;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +74,13 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
             const SizedBox(height: 20,),
-            CustomTextfield(maxlength: 100, hintText: 'Enter Video Title', controller: titleController)
+            CustomTextfield(maxlength: 100, hintText: 'Enter Video Title', controller: FileService().titleController),
+            SizedBox(height: 40,),
+            Row(
+              children: [
+                _mainButton(() => null, 'Save File')
+              ],
+            ),
           ],
         ),
       ),

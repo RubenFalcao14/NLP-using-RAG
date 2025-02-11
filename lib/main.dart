@@ -19,5 +19,5 @@ class _HomeScreenState extends State<MyApp> {
 }
 
 void main() async{
-  runApp(HomeScreen());
+  runApp(MyApp());
 }
