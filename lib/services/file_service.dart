@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:nlp/utils/snackbar_utils.dart';
+import 'package:file_picker/file_picker.dart';
 
 class FileService {
   final TextEditingController titleController = TextEditingController();
@@ -8,7 +10,7 @@ class FileService {
   bool fieldsNotEmpty = false;
 
   File? _selectedFiled;
-  String _selectedDirectory = '';
+  final String _selectedDirectory = '';
   
   void savedContent(context) async{
     final title = titleController.text;
@@ -19,7 +21,12 @@ class FileService {
       if(_selectedFiled != null){
         await _selectedFiled!.writeAsString(textContent);
       } else{
-        
+        final todayDate = getTodayDate();
+        String metadataDirPath = _selectedDirectory;
+        if(metadataDirPath.isEmpty){
+          final directory = await FilePicker.platform.getDirectoryPath();
+          _selectedFiled = metadataDirPath = directory!;
+        }
       }
 
   }catch(e){
@@ -27,4 +34,10 @@ class FileService {
   }
   }
 
+  static String getTodayDate(){
+    final now = DateTime.now();
+    final formatter = DateFormat('yyyy-MM-dd');
+    final formattedDate = formatter.format(now);
+    return formattedDate;
+  }
 }
