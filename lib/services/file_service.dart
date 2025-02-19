@@ -10,9 +10,9 @@ class FileService {
   bool fieldsNotEmpty = false;
 
   File? _selectedFiled;
-  final String _selectedDirectory = '';
+  String _selectedDirectory = '';
   
-  void savedContent(context) async{
+  void saveContent(context) async{
     final title = titleController.text;
 
     final textContent = "Title:\n\n$title";
@@ -25,10 +25,13 @@ class FileService {
         String metadataDirPath = _selectedDirectory;
         if(metadataDirPath.isEmpty){
           final directory = await FilePicker.platform.getDirectoryPath();
-          _selectedFiled = metadataDirPath = directory!;
+          _selectedDirectory = metadataDirPath = directory!;
         }
+        final filePath = '$metadataDirPath/$todayDate - $title - Metadata.txt';
+        final newFile = File(filePath); 
+        await newFile.writeAsString(textContent);
       }
-
+    SnackBarUtils.showSnackbar(context, Icons.check_circle, 'File saved successfully');
   }catch(e){
     SnackBarUtils.showSnackbar(context, Icons.error, 'File not saved');
   }

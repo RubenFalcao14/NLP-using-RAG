@@ -17,6 +17,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState(){
     super.initState();
+    addListeners();
   }
 
   @override
@@ -52,40 +53,49 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppTheme.dark,
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 40.0, vertical: 20.0),
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                _mainButton(() => null,'New File'),
-                _mainButton(null,'Save File'),
-                Row(
-                  children: [
-                    _actionButton(() => null,Icons.file_upload),
-                    SizedBox(width: 8,),
-                    _actionButton(() => null,Icons.folder),
-                  ],
-                )
-              ],
-            ),
-            const SizedBox(height: 20,),
-            CustomTextfield(maxlength: 100, hintText: 'Enter Video Title', controller: FileService().titleController),
-            SizedBox(height: 40,),
-            Row(
-              children: [
-                _mainButton(() => null, 'Save File')
-              ],
-            ),
-          ],
-        ),
+Widget build(BuildContext context) {
+
+  return Scaffold(
+    backgroundColor: AppTheme.dark,
+    body: Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 40.0, vertical: 20.0),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              _mainButton(() => null, 'New File'),
+              _mainButton(null, 'Save File'),
+              Row(
+                children: [
+                  _actionButton(() => null, Icons.file_upload),
+                  const SizedBox(width: 8),
+                  _actionButton(() => null, Icons.folder),
+                ],
+              )
+            ],
+          ),
+          const SizedBox(height: 20),
+          CustomTextfield(
+            maxlength: 100, 
+            hintText: 'Enter Video Title', 
+            controller: fileService.titleController // Use the instance
+          ),
+          const SizedBox(height: 40),
+          Row(
+            children: [
+              _mainButton(
+                fileService.fieldsNotEmpty ? () => fileService.saveContent(context) : null, 
+                'Save File'
+              )
+            ],
+          ),
+        ],
       ),
-    );
-  }
+    ),
+  );
+}
+
   ElevatedButton _mainButton(Function()? onPressed, String text) {
     return ElevatedButton(
       onPressed: onPressed, 
