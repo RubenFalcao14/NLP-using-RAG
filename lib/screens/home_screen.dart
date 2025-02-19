@@ -68,7 +68,7 @@ Widget build(BuildContext context) {
               _mainButton(null, 'Save File'),
               Row(
                 children: [
-                  _actionButton(() => null, Icons.file_upload),
+                  _actionButton(() => fileService.loadFile(context), Icons.file_upload),
                   const SizedBox(width: 8),
                   _actionButton(() => null, Icons.folder),
                 ],

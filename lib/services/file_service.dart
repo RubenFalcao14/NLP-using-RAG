@@ -9,7 +9,7 @@ class FileService {
 
   bool fieldsNotEmpty = false;
 
-  File? _selectedFiled;
+  File? _selectedFile;
   String _selectedDirectory = '';
   
   void saveContent(context) async{
@@ -18,8 +18,8 @@ class FileService {
     final textContent = "Title:\n\n$title";
 
     try{
-      if(_selectedFiled != null){
-        await _selectedFiled!.writeAsString(textContent);
+      if(_selectedFile != null){
+        await _selectedFile!.writeAsString(textContent);
       } else{
         final todayDate = getTodayDate();
         String metadataDirPath = _selectedDirectory;
@@ -35,6 +35,28 @@ class FileService {
   }catch(e){
     SnackBarUtils.showSnackbar(context, Icons.error, 'File not saved');
   }
+  }
+
+  void loadFile(context) async{
+    try {
+      FilePickerResult? result = await FilePicker.platform.pickFiles();
+
+      if(result != null){
+        File file = File(result.files.single.path!);
+        _selectedFile = file;
+
+        final fileContent = await file.readAsString();
+
+        final lines = fileContent.split('\n\n');
+        titleController.text = lines[1];
+        SnackBarUtils.showSnackbar(context, Icons.upload_file, 'File uploaded');
+      } else{
+        SnackBarUtils.showSnackbar(context, Icons.error_rounded, 'No file selected.');
+      }
+
+    } catch (e) {
+      SnackBarUtils.showSnackbar(context, Icons.error_rounded, 'No file selected.');
+    }
   }
 
   static String getTodayDate(){
