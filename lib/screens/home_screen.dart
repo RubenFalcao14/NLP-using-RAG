@@ -64,7 +64,7 @@ Widget build(BuildContext context) {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              _mainButton(() => fileService.newFile(context), 'New File'),
+              _mainButton(() => fileService.newChat(context), 'New Chat'),
               _mainButton(null, 'Save File'),
               Row(
                 children: [
@@ -78,7 +78,7 @@ Widget build(BuildContext context) {
           const SizedBox(height: 20),
           CustomTextfield(
             maxlength: 100, 
-            hintText: 'Enter Video Title', 
+            hintText: 'Enter your Prompt', 
             controller: fileService.titleController // Use the instance
           ),
           const SizedBox(height: 40),
