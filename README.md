@@ -1,4 +1,4 @@
-# nlp
+# OFFLINE KNOWLEDGE ASSISTANT USING RAG
 
 A new Flutter project.
 
