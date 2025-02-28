@@ -64,13 +64,13 @@ Widget build(BuildContext context) {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              _mainButton(() => null, 'New File'),
+              _mainButton(() => fileService.newFile(context), 'New File'),
               _mainButton(null, 'Save File'),
               Row(
                 children: [
                   _actionButton(() => fileService.loadFile(context), Icons.file_upload),
                   const SizedBox(width: 8),
-                  _actionButton(() => null, Icons.folder),
+                  _actionButton(() => fileService.newDirectory(context), Icons.folder),
                 ],
               )
             ],
