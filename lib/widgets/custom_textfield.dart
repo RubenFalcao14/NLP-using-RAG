@@ -25,7 +25,7 @@ class _CustomTextfieldState extends State<CustomTextfield> {
 
   void copyToClipboard(context, String text){
     Clipboard.setData(ClipboardData(text: text));
-    SnackBarUtils.showSnackbar(context, Icons.content_copy, 'Copied Text');
+    //SnackBarUtils.showSnackbar(context, Icons.content_copy, 'Copied Text');
   }
 
   @override
@@ -64,7 +64,7 @@ class _CustomTextfieldState extends State<CustomTextfield> {
       splashColor: AppTheme.accent,
       disabledColor: AppTheme.medium,
       splashRadius: 20,
-      icon: Icon(Icons.content_copy_rounded,),
+      icon: Icon(Icons.send,),
     );
   }
 }

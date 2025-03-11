@@ -65,7 +65,7 @@ Widget build(BuildContext context) {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               _mainButton(() => fileService.newChat(context), 'New Chat'),
-              _mainButton(null, 'Save File'),
+             // _mainButton(null, 'Save File'),
               Row(
                 children: [
                   _actionButton(() => fileService.loadFile(context), Icons.file_upload),
@@ -84,10 +84,10 @@ Widget build(BuildContext context) {
           const SizedBox(height: 40),
           Row(
             children: [
-              _mainButton(
+              /*_mainButton(
                 fileService.fieldsNotEmpty ? () => fileService.saveContent(context) : null, 
                 'Save File'
-              )
+              )*/
             ],
           ),
         ],
