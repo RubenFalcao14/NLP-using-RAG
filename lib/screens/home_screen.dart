@@ -81,7 +81,6 @@ Widget build(BuildContext context) {
             hintText: 'Enter your Prompt', 
             controller: fileService.titleController // Use the instance
           ),
-          const SizedBox(height: 40),
           Row(
             children: [
               /*_mainButton(

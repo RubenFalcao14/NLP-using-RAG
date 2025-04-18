@@ -1,0 +1,10 @@
+^C:\FLUTTER PROJ\NLP\BUILD\WINDOWS\X64\CMAKEFILES\8A75D52BFEE0EAFC6FCAA16BD5A3066A\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" "-SC:/Flutter Proj/nlp/windows" "-BC:/Flutter Proj/nlp/build/windows/x64" --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file "C:/Flutter Proj/nlp/build/windows/x64/nlp.sln"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

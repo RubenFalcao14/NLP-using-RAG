@@ -155,7 +155,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
-    <ProjectReference Include="C:\Flutter Proj\nlp\build\windows\x64\runner\ALL_BUILD.vcxproj">
+    <ProjectReference Include="C:\Flutter Proj\nlp\build\windows\x64\plugins\window_manager\ALL_BUILD.vcxproj">
       <Project>{F24625E8-CACC-3D40-B020-5601A59EE146}</Project>
       <Name>ALL_BUILD</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>

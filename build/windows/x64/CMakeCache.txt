@@ -206,6 +206,24 @@ runner_IS_TOP_LEVEL:STATIC=OFF
 //Value Computed by CMake
 runner_SOURCE_DIR:STATIC=C:/Flutter Proj/nlp/windows/runner
 
+//Value Computed by CMake
+screen_retriever_windows_BINARY_DIR:STATIC=C:/Flutter Proj/nlp/build/windows/x64/plugins/screen_retriever_windows
+
+//Value Computed by CMake
+screen_retriever_windows_IS_TOP_LEVEL:STATIC=OFF
+
+//Value Computed by CMake
+screen_retriever_windows_SOURCE_DIR:STATIC=C:/Flutter Proj/nlp/windows/flutter/ephemeral/.plugin_symlinks/screen_retriever_windows/windows
+
+//Value Computed by CMake
+window_manager_BINARY_DIR:STATIC=C:/Flutter Proj/nlp/build/windows/x64/plugins/window_manager
+
+//Value Computed by CMake
+window_manager_IS_TOP_LEVEL:STATIC=OFF
+
+//Value Computed by CMake
+window_manager_SOURCE_DIR:STATIC=C:/Flutter Proj/nlp/windows/flutter/ephemeral/.plugin_symlinks/window_manager/windows
+
 
 ########################
 # INTERNAL cache entries
@@ -285,7 +303,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_MT
 CMAKE_MT-ADVANCED:INTERNAL=1
 //number of local generators
-CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=3
+CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=5
 //Platform information initialized
 CMAKE_PLATFORM_INFO_INITIALIZED:INTERNAL=1
 //noop for ranlib

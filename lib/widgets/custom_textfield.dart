@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:nlp/utils/app_styles.dart';
 import 'package:nlp/utils/snackbar_utils.dart';
+import 'package:nlp/services/api_service.dart';
 
 class CustomTextfield extends StatefulWidget {
   final int maxlength;
@@ -42,7 +43,7 @@ class _CustomTextfieldState extends State<CustomTextfield> {
       decoration: InputDecoration(
         hintStyle: AppTheme.hintstyle,
         hintText: widget.hintText,
-        suffixIcon: _copyButton(context),
+        suffixIcon: _enterButton(context),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(
             color: AppTheme.accent,
@@ -57,9 +58,14 @@ class _CustomTextfieldState extends State<CustomTextfield> {
       ),
     );
   }
-  IconButton _copyButton(BuildContext context){
+  IconButton _enterButton(BuildContext context){
     return IconButton(
-      onPressed: widget.controller.text.isNotEmpty ? () => copyToClipboard(context, widget.controller.text) : null, 
+      onPressed: widget.controller.text.isNotEmpty ? () async {
+        String result = await ApiService.askQuestion(widget.controller.text);
+        print(result); // or setState(() => _response = result);
+        print('Hello');
+      }
+    : null,
       color: AppTheme.accent,
       splashColor: AppTheme.accent,
       disabledColor: AppTheme.medium,

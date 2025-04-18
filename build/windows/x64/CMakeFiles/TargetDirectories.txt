@@ -8,3 +8,9 @@ C:/Flutter Proj/nlp/build/windows/x64/flutter/CMakeFiles/INSTALL.dir
 C:/Flutter Proj/nlp/build/windows/x64/runner/CMakeFiles/nlp.dir
 C:/Flutter Proj/nlp/build/windows/x64/runner/CMakeFiles/INSTALL.dir
 C:/Flutter Proj/nlp/build/windows/x64/runner/CMakeFiles/ALL_BUILD.dir
+C:/Flutter Proj/nlp/build/windows/x64/plugins/screen_retriever_windows/CMakeFiles/screen_retriever_windows_plugin.dir
+C:/Flutter Proj/nlp/build/windows/x64/plugins/screen_retriever_windows/CMakeFiles/INSTALL.dir
+C:/Flutter Proj/nlp/build/windows/x64/plugins/screen_retriever_windows/CMakeFiles/ALL_BUILD.dir
+C:/Flutter Proj/nlp/build/windows/x64/plugins/window_manager/CMakeFiles/window_manager_plugin.dir
+C:/Flutter Proj/nlp/build/windows/x64/plugins/window_manager/CMakeFiles/INSTALL.dir
+C:/Flutter Proj/nlp/build/windows/x64/plugins/window_manager/CMakeFiles/ALL_BUILD.dir
