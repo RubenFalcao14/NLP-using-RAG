@@ -24,10 +24,11 @@ class _CustomTextfieldState extends State<CustomTextfield> {
     super.dispose();
   }
 
-  void copyToClipboard(context, String text){
+  /*void copyToClipboard(context, String text){
     Clipboard.setData(ClipboardData(text: text));
-    //SnackBarUtils.showSnackbar(context, Icons.content_copy, 'Copied Text');
+    SnackBarUtils.showSnackbar(context, Icons.content_copy, 'Copied Text');
   }
+  */
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +64,6 @@ class _CustomTextfieldState extends State<CustomTextfield> {
       onPressed: widget.controller.text.isNotEmpty ? () async {
         String result = await ApiService.askQuestion(widget.controller.text);
         print(result); // or setState(() => _response = result);
-        print('Hello');
       }
     : null,
       color: AppTheme.accent,
