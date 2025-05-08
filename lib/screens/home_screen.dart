@@ -13,8 +13,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   FileService fileService = FileService();
-
-  String _response = ''; // <- store the backend response
+  List<Map<String, dynamic>> _messages = []; // Store messages
   bool _isLoading = false;
 
   @override
@@ -56,18 +55,41 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  Future<void> _askQuestion() async {
+  void handleNewChat() {
+  setState(() {
+    _messages.clear();        // Clear all conversation messages
+    fileService.titleController.clear();      // Clear the text field
+  });
+}
+
+
+  // Add the function to handle user input and AI's response
+  Future<void> handleSubmit() async {
+    if (fileService.titleController.text.isEmpty) return;
+
+    // Add user's message to the list
     setState(() {
-      _isLoading = true;
-      _response = '';
+      _messages.add({
+        'text': fileService.titleController.text,
+        'isUser': true,
+      });
+      _isLoading = true;  // Set loading state when sending
     });
 
+    // Send the request to the API and get the AI's response
     final result = await ApiService.askQuestion(fileService.titleController.text);
 
+    // Add AI's response to the list
     setState(() {
-      _response = result;
-      _isLoading = false;
+      _messages.add({
+        'text': result,
+        'isUser': false,
+      });
+      _isLoading = false; // Reset loading state
     });
+
+    // Clear the input field after submission
+    fileService.titleController.clear();
   }
 
   @override
@@ -82,7 +104,11 @@ class _HomeScreenState extends State<HomeScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                _mainButton(() => fileService.newChat(context), 'New Chat'),
+                _mainButton(() {
+                  fileService.newChat(context);
+                  handleNewChat();
+                }, 'New Chat'),
+
                 Row(
                   children: [
                     _actionButton(() => fileService.loadFile(context), Icons.file_upload),
@@ -93,40 +119,42 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
             const SizedBox(height: 20),
+
+            // Displaying chat messages
+            Expanded(
+              child: ListView.builder(
+                itemCount: _messages.length,
+                itemBuilder: (context, index) {
+                  final message = _messages[index];
+                  final isUserMessage = message['isUser'];
+
+                  return Align(
+                    alignment: isUserMessage ? Alignment.centerRight : Alignment.centerLeft,
+                    child: Container(
+                      margin: const EdgeInsets.symmetric(vertical: 5.0),
+                      padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
+                      decoration: BoxDecoration(
+                        color: isUserMessage ? AppTheme.accent : AppTheme.medium,
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                      child: Text(
+                        message['text'],
+                        style: TextStyle(color: isUserMessage ? Colors.white : Colors.black),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+
+            // Text input field
             CustomTextfield(
               maxlength: 100,
               hintText: 'Enter your Prompt',
               controller: fileService.titleController,
-              onSendPressed: _askQuestion,
-              isSending: _isLoading,
+              onSendPressed: handleSubmit,  // Using the handleSubmit function
+              isSending: _isLoading,  // Show loading indicator if sending
             ),
-            const SizedBox(height: 10),
-            /*_mainButton(
-              fileService.fieldsNotEmpty ? _askQuestion : null,
-              'Submit',
-            ),*/
-            const SizedBox(height: 20),
-            if (_isLoading)
-              const Center(child: CircularProgressIndicator(color: AppTheme.accent))
-            else if (_response.isNotEmpty) ...[
-              Text(
-                'Answer:',
-                style: AppTheme.hintstyle,
-              ),
-              const SizedBox(height: 10),
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  border: Border.all(color: AppTheme.medium),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Text(
-                  _response,
-                  style: AppTheme.inputstyle,
-                ),
-              ),
-            ],
           ],
         ),
       ),

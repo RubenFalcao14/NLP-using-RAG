@@ -59,11 +59,11 @@ class FileService {
     }
   }
 
-  void newChat(context){
-    _selectedFile = null;
-    titleController.clear();
-    SnackBarUtils.showSnackbar(context, Icons.file_upload, 'New chat started');
-  }
+  void newChat(BuildContext context) {
+  _selectedFile = null;                  // Clear selected file
+  titleController.clear();               // Clear file title text
+  SnackBarUtils.showSnackbar(context, Icons.file_upload,'New chat started',);                                      // Show a small message
+}
 
   void newDirectory(context) async{
     try {

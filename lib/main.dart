@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:nlp/screens/home_screen.dart';
 import 'package:nlp/screens/splash_screen.dart';
 import 'package:window_manager/window_manager.dart';
 

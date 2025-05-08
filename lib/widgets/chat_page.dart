@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:nlp/utils/app_styles.dart';
-import 'package:nlp/utils/snackbar_utils.dart';
 import 'package:nlp/services/api_service.dart';
 
 class RagScreen extends StatefulWidget {
@@ -14,24 +12,32 @@ class RagScreen extends StatefulWidget {
 class _RagScreenState extends State<RagScreen> {
   final TextEditingController _controller = TextEditingController();
   String _answer = '';
-
   bool _isSending = false;
 
-  Future<void> handleSubmit() async {
+  List<Map<String, dynamic>> _messages = []; // <- Declaring the messages list
+
+  // Function to handle the submission of the user's question
+  void handleSubmit() async {
     if (_controller.text.isEmpty) return;
 
+    // Add the user's message to the list of messages
+    setState(() {
+      _messages.add({'text': _controller.text, 'isUser': true});
+    });
+
+    // Set the sending flag to true while waiting for the response
     setState(() {
       _isSending = true;
     });
 
+    // Fetch the AI response
     final result = await ApiService.askQuestion(_controller.text);
 
+    // Add the AI's response to the list of messages
     setState(() {
-      _answer = result;
-      _isSending = false;
+      _messages.add({'text': result, 'isUser': false});
+      _isSending = false; // Set sending flag back to false
     });
-
-    _controller.clear();
   }
 
   @override
@@ -62,7 +68,35 @@ class _RagScreenState extends State<RagScreen> {
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 10),
+            // Displaying the answer from the backend
             Text(_answer),
+
+            // Displaying chat messages
+            Expanded(
+              child: ListView.builder(
+                itemCount: _messages.length,
+                itemBuilder: (context, index) {
+                  final message = _messages[index];
+                  final isUserMessage = message['isUser'];
+
+                  return Align(
+                    alignment: isUserMessage ? Alignment.centerRight : Alignment.centerLeft,
+                    child: Container(
+                      margin: const EdgeInsets.symmetric(vertical: 5.0),
+                      padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
+                      decoration: BoxDecoration(
+                        color: isUserMessage ? AppTheme.accent : AppTheme.medium,
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                      child: Text(
+                        message['text'],
+                        style: TextStyle(color: isUserMessage ? Colors.white : Colors.black),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
           ],
         ),
       ),
@@ -86,7 +120,6 @@ class CustomTextfield extends StatefulWidget {
     required this.controller,
     required this.onSendPressed,
     required this.isSending,
-    
   });
 
   @override
@@ -103,51 +136,51 @@ class _CustomTextfieldState extends State<CustomTextfield> {
   }
 
   @override
-Widget build(BuildContext context) {
-  return TextField(
-    focusNode: _focusNode,
-    controller: widget.controller,
-    maxLength: widget.maxlength,
-    maxLines: widget.maxlines,
-    keyboardType: TextInputType.multiline,
-    cursorColor: AppTheme.accent,
-    style: AppTheme.inputstyle,
-    decoration: InputDecoration(
-      hintStyle: AppTheme.hintstyle,
-      hintText: widget.hintText,
-      suffixIcon: IconButton(
-        onPressed: widget.controller.text.isNotEmpty && !widget.isSending
-            ? widget.onSendPressed
-            : null,
-        icon: widget.isSending
-            ? const SizedBox(
-                width: 18,
-                height: 18,
-                child: CircularProgressIndicator(
-                  strokeWidth: 2,
-                  color: AppTheme.accent,
-                ),
-              )
-            : const Icon(Icons.send),
-        color: AppTheme.accent,
-        disabledColor: AppTheme.medium,
-        splashRadius: 20,
-      ),
-      focusedBorder: OutlineInputBorder(
-        borderSide: BorderSide(
+  Widget build(BuildContext context) {
+    return TextField(
+      focusNode: _focusNode,
+      controller: widget.controller,
+      maxLength: widget.maxlength,
+      maxLines: widget.maxlines,
+      keyboardType: TextInputType.multiline,
+      cursorColor: AppTheme.accent,
+      style: AppTheme.inputstyle,
+      decoration: InputDecoration(
+        hintStyle: AppTheme.hintstyle,
+        hintText: widget.hintText,
+        suffixIcon: IconButton(
+          onPressed: widget.controller.text.isNotEmpty && !widget.isSending
+              ? widget.onSendPressed
+              : null,
+          icon: widget.isSending
+              ? const SizedBox(
+                  width: 18,
+                  height: 18,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2,
+                    color: AppTheme.accent,
+                  ),
+                )
+              : const Icon(Icons.send),
           color: AppTheme.accent,
+          disabledColor: AppTheme.medium,
+          splashRadius: 20,
         ),
-      ),
-      enabledBorder: OutlineInputBorder(
-        borderSide: BorderSide(
-          color: AppTheme.medium,
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: AppTheme.accent,
+          ),
         ),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: AppTheme.medium,
+          ),
+        ),
+        counterStyle: AppTheme.counterstyle,
       ),
-      counterStyle: AppTheme.counterstyle,
-    ),
-    onChanged: (text) {
-      setState(() {}); // Rebuild to enable/disable send button
-    },
-  );
-}
+      onChanged: (text) {
+        setState(() {}); // Rebuild to enable/disable send button
+      },
+    );
+  }
 }
