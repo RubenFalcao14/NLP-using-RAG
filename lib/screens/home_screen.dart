@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nlp/services/file_service.dart';
 import 'package:nlp/services/api_service.dart';
 import 'package:nlp/utils/app_styles.dart';
-import 'package:nlp/widgets/main_page.dart';
+import 'package:nlp/widgets/chat_page.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -97,12 +97,14 @@ class _HomeScreenState extends State<HomeScreen> {
               maxlength: 100,
               hintText: 'Enter your Prompt',
               controller: fileService.titleController,
+              onSendPressed: _askQuestion,
+              isSending: _isLoading,
             ),
             const SizedBox(height: 10),
-            _mainButton(
+            /*_mainButton(
               fileService.fieldsNotEmpty ? _askQuestion : null,
               'Submit',
-            ),
+            ),*/
             const SizedBox(height: 20),
             if (_isLoading)
               const Center(child: CircularProgressIndicator(color: AppTheme.accent))
